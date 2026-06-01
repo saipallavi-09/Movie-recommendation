@@ -147,10 +147,10 @@ with tab1:
             selected_idx = st.selectbox(
                 "Select a target baseline movie",
                 options=matches.index,
-                format_func=lambda idx: f"{matches.at[idx, 'clean_title']} ({matches.at[idx, 'year'] or 'N/A'})"
+                format_func=lambda idx: f"{df.at[idx, 'clean_title']} ({df.at[idx, 'year'] or 'N/A'})"
             )
             
-            target_genres = df.at[selected_idx, "genre_set"]
+            target_genres = df.loc[selected_idx, "genre_set"]
             
             st.markdown(f"#### Genres of selected movie:")
             for g in target_genres:
@@ -159,7 +159,7 @@ with tab1:
             st.markdown("---")
             st.markdown("### 🏆 Top AI Recommended Movies")
             
-            target_genres = df.at[selected_idx, "genre_set"]
+            target_genres = df.loc[selected_idx, "genre_set"]
             if target_genres and target_genres != {"(no genres listed)"}:
                 matching_df = df[df["genre_set"].apply(lambda s: not s.isdisjoint(target_genres))].copy()
                 matching_df = matching_df[matching_df.index != selected_idx]
